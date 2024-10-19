@@ -1,40 +1,29 @@
-const http = require("http");
-const qs = require("querystring");
-const calculator = require("./calculator");
+const express = require("express");
+const bodyParser = require("body-parser");
+const { stringCalculator } = require("./string-calculator");
 
-const server = http.createServer(function (request, response) {
-  console.dir(request.param);
+const initializeApp = async () => {
+  const app = express();
+  return app;
+};
 
-  if (request.method == "POST") {
-    console.log("POST");
-    var body = "";
-    request.on("data", function (data) {
-      body += data;
-    });
+const startServer = async (app, port) => {
+  app.use(bodyParser.json());
 
-    request.on("end", function () {
-      const post = qs.parse(body);
-      const numbers = post.numbers;
-      const result = calculator.add(numbers);
-      response.writeHead(200, { "Content-Type": "text/html" });
-      response.end("Result: " + result);
-    });
-  } else {
-    var html = `
-            <html>
-                <body>
-                    <form method="post" action="http://localhost:3000">Numbers: 
-                        <input type="text" name="numbers" />
-                        <input type="submit" value="Add" />
-                    </form>
-                </body>
-            </html>`;
-    response.writeHead(200, { "Content-Type": "text/html" });
-    response.end(html);
-  }
+  app.use((req, res, next) => {
+    // logger.info(`Incoming request for: ${req.url}`); // Uncomment if needed
+    stringCalculator("3"); // Example function call
+    next();
+  });
+
+  // Start the server and listen on the given port
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
+};
+
+// Initialize and start the server
+initializeApp().then(async (app) => {
+  const port = 3000;
+  await startServer(app, port); // Start the server on port 3000
 });
-
-const port = 3000;
-const host = "127.0.0.1";
-server.listen(port, host);
-console.log(`Listening at http://${host}:${port}`);

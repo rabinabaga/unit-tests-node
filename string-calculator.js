@@ -10,7 +10,7 @@ function stringCalculator(testString) {
 function sumTheElements(testString) {
   const stringArray = testString.split(",");
   let sum = 0;
-  for (str in stringArray) {
+  for (let str of stringArray) {
     sum += Number(str);
   }
   return sum;
