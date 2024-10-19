@@ -16,4 +16,12 @@ describe("string-calculator", () => {
   test("should return 6 for the input '1,2,3'", () => {
     expect(stringCalculator("1,2,3")).toBe(6);
   });
+
+  test("should return 6 for the input '1\n2,3'", () => {
+    expect(stringCalculator("1,2,3")).toBe(6);
+  });
+
+  test("should return 6 for the input '6\n,'", () => {
+    expect(stringCalculator("6\n,")).toBe(6);
+  });
 });

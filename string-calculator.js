@@ -8,7 +8,7 @@ function stringCalculator(testString) {
 }
 
 function sumTheElements(testString) {
-  const stringArray = testString.split(",");
+  const stringArray = testString.split(/[,\n]+/);
   const sum = stringArray.reduce(
     (accumulator, element) => accumulator + Number(element),
     0
