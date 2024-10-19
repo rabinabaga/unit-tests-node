@@ -9,10 +9,10 @@ function stringCalculator(testString) {
 
 function sumTheElements(testString) {
   const stringArray = testString.split(",");
-  let sum = 0;
-  for (let str of stringArray) {
-    sum += Number(str);
-  }
+  const sum = stringArray.reduce(
+    (accumulator, element) => accumulator + Number(element),
+    0
+  );
   return sum;
 }
 
